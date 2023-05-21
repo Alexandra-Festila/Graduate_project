@@ -87,7 +87,7 @@ class DatabaseManager:
 
         self._execute(statement, column_values)
 
-    def delete_record(self, table_name: str, criteria: t.Dict[str, str]) -> None:
+    def delete_record(self, table_name: str, criteria: t.Dict[str, t.Union[str, int, float]]) -> None:
         """Taken in a table name and creates a DELETE FROM statement and a criteria)"""
 
         placeholders = [f"{column} = ?" for column in criteria.keys()]
@@ -108,7 +108,7 @@ class DatabaseManager:
     def select_record(
         self, 
         table_name: str, 
-        criteria: t.Dict[str, str] = {}, 
+        criteria: t.Dict[str, t.Union[str, int, float]] = {}, 
         order_by: t.Optional[str] = None,
         ordered_desc: bool = False
     ) -> sqlite3.Cursor:
@@ -119,7 +119,7 @@ class DatabaseManager:
 
         select_criteria_values = tuple(criteria.values())
 
-        statement = f"SELECT * FROM {table_name} "
+        statement = f"SELECT * FROM {table_name}"
         if criteria:
             placeholders = [f"{column} = ?" for column in criteria.keys()]
             select_criteria = " AND ".join(placeholders)
@@ -131,6 +131,9 @@ class DatabaseManager:
                 statement = statement + f" DESC"
 
         statement = statement + ";"
+
+        return self._execute(statement, select_criteria_values)
+
 
 
 
