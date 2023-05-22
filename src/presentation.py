@@ -8,6 +8,9 @@ class Option:
     def __init__(
         self, name: str, command: Command, prep_call: t.Optional[t.Callable] = None
     ):
+    def __init__(
+        self, name: str, command: Command, prep_call: t.Optional[t.Callable] = None
+    ):
         self.name = name
         self.command = command
         self.prep_call = prep_call
