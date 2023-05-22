@@ -8,9 +8,6 @@ class Option:
     def __init__(
         self, name: str, command: Command, prep_call: t.Optional[t.Callable] = None
     ):
-    def __init__(
-        self, name: str, command: Command, prep_call: t.Optional[t.Callable] = None
-    ):
         self.name = name
         self.command = command
         self.prep_call = prep_call
@@ -40,6 +37,32 @@ def get_option_choice(options: t.Dict[str, Option]) -> Option:
         print("Invalid menu selection, please choose a valid option.")
         choice = input("Please select an option.")
     return options[choice.upper()]
+
+def get_user_input(label: str, required: bool = True) -> t.Optional[str]:
+    value = input(f"{label}: ") or None
+    while required and not value:
+        value = input(f"{label}: ") or None
+    return value
+
+def get_new_records() -> t.Dict[str, str]:
+    result = {
+        'patient_id': get_user_input("Patient ID"),
+        'heart_rate': get_user_input("Heart Rate"),
+        'blood_pressure': get_user_input("Blood Pressure"),
+        'respiratory_rate': get_user_input("Respiratory Rate"),
+        'oxygen_saturation': get_user_input("Oxygen Saturation"),
+        'temperature': get_user_input("Temperature"),
+    }
+    return result
+
+def get_record_id() -> int:
+    result = int(get_user_input("Enter a record ID"))
+    return result
+
+def get_patient_id() -> int:
+    result = int(get_user_input("Enter a patient ID"))
+    return result
+
 
 def clear_screen():
     clear_command = "cls" if os.name == "nt" else "clear"

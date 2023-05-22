@@ -6,6 +6,7 @@ def loop():
         "A": p.Option(
             name="Add a record",
             command=c.AddRecordCommand(),
+            prep_call=p.get_new_records
         ),
         "L": p.Option(
             name="List records by date",
@@ -18,14 +19,17 @@ def loop():
         "P": p.Option(
             name="Get all records of a patient",
             command=c.GetPatientRecordsCommand(),
+            prep_call=p.get_patient_id
         ),
         "D": p.Option(
             name="Delete a single record",
             command=c.DeleteRecordCommand(),
+            prep_call=p.get_record_id
         ),
         "R": p.Option(
             name="Delete all records of a patient",
-            command=c.DeletePatientRecordsCommand
+            command=c.DeletePatientRecordsCommand,
+            prep_call=p.get_patient_id
         ),
         "Q": p.Option(
             name="Quit",

@@ -93,7 +93,7 @@ class DatabaseManager:
 
         placeholders = [f"{column} = ?" for column in criteria.keys()]
         delete_criteria = " AND ".join(placeholders)
-        delete_criteria_values = tuple(criteria.values)
+        delete_criteria_values = tuple(criteria.values())
 
         statement = dedent(
             f"""

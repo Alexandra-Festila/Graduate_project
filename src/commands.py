@@ -31,10 +31,10 @@ class CreateVitalSignsTableCommand:
 class AddRecordCommand:
     """ A command class the adds a vitals record for a patient"""
 
-    def execute(self, data: t.Dict[str, t.Union[str, int, float]], timestamp: t.Optional[str]) -> str:
+    def execute(self, data: t.Dict[str, t.Union[str, int, float]]) -> str:
         "The actual execution of the command."
 
-        date = timestamp or datetime.utcnow().isoformat()
+        date = datetime.utcnow().isoformat()
         data.setdefault("date", date)
         patient_id = data["patient_id"]
 
@@ -71,7 +71,7 @@ class DeleteRecordCommand:
         """A command class that deletes a single record from the SQL table"""
         
         def execute(self, data: int) -> str:
-            db.delete_record(table_name="vitals", criteria={"id": data})
+            db.delete_record(table_name="vitals", criteria={"record_id": data})
             return f"Record {data} deleted."
 
 
