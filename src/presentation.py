@@ -1,5 +1,5 @@
 "A module for the presentation layer"
-
+import os
 import typing as t
 
 from src.commands import Command
@@ -37,3 +37,7 @@ def get_option_choice(options: t.Dict[str, Option]) -> Option:
         print("Invalid menu selection, please choose a valid option.")
         choice = input("Please select an option.")
     return options[choice.upper()]
+
+def clear_screen():
+    clear_command = "cls" if os.name == "nt" else "clear"
+    os.system(clear_command)
