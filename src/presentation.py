@@ -44,7 +44,7 @@ def get_user_input(label: str, required: bool = True) -> t.Optional[str]:
         value = input(f"{label}: ") or None
     return value
 
-def get_new_records() -> t.Dict[str, str]:
+def get_new_records() -> t.Dict[str, t.Optional[str]]:
     result = {
         'patient_id': get_user_input("Patient ID"),
         'heart_rate': get_user_input("Heart Rate"),
@@ -56,11 +56,11 @@ def get_new_records() -> t.Dict[str, str]:
     return result
 
 def get_record_id() -> int:
-    result = int(get_user_input("Enter a record ID"))
+    result = int(get_user_input("Enter a record ID")) # type: ignore
     return result
 
 def get_patient_id() -> int:
-    result = int(get_user_input("Enter a patient ID"))
+    result = int(get_user_input("Enter a patient ID")) # type: ignore
     return result
 
 
