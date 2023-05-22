@@ -65,6 +65,7 @@ class DatabaseManager:
         statement = f"DROP TABLE {table_name};"
         self._execute(statement)
 
+
     def add_record(self, table_name:str, data: t.Dict[str, t.Union[str, int, float]]) -> None:
 
         """Taken in a table name and creates an INSERT data INTO statement and a data dictionary 
