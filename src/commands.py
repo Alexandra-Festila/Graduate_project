@@ -4,11 +4,7 @@ import typing as t
 
 from datetime import datetime
 
-print("Before import statement")  # Add this line before the import statement
-
 from src.database import DatabaseManager
-
-print("After import statement")  # Add this line after the import statement
 
 db = DatabaseManager("patient_monitoring.db")
 
@@ -17,7 +13,7 @@ class Command(t.Protocol):
         pass
 
 class CreateVitalSignsTableCommand:
-    def execute(self, db: DatabaseManager):
+    def execute(self):
         db.create_table(
             table_name="vitals",
             columns={
@@ -32,13 +28,13 @@ class CreateVitalSignsTableCommand:
             }
         )
 
-class AddVitalsCommand:
-    """ A command class the adds a vitals record for a specific patient"""
+class AddRecordCommand:
+    """ A command class the adds a vitals record for a patient"""
 
-    def execute(self, patient: int, data: t.Dict[str, t.Union[str, int, float]]) -> str:
+    def execute(self, data: t.Dict[str, t.Union[str, int, float]], timestamp: t.Optional[str]) -> str:
         "The actual execution of the command."
 
-        date = datetime.utcnow().isoformat()
+        date = timestamp or datetime.utcnow().isoformat()
         data.setdefault("date", date)
         patient_id = data["patient_id"]
 
@@ -50,7 +46,7 @@ class AddVitalsCommand:
 class ListRecordsCommand:
     """A command class that lists vitals records based on specific criteria."""
 
-    def __init__(self, order_by: str = "date_added"):
+    def __init__(self, order_by: str = "date"):
         self.order_by = order_by
 
     def execute(self) -> t.List[str]:
@@ -66,13 +62,13 @@ class ListRecordsCommand:
 class GetPatientRecordsCommand:
     """A command class that will return all the records of a specific patient."""
 
-    def execute (self, data: int):
+    def execute (self, data: int) -> t.Optional[tuple]:
         result = db.select_record(table_name="vitals", criteria={"patient_id": data}).fetchone()
         return result
 
 
 class DeleteRecordCommand:
-        """A command class that deletes a record from the SQL table"""
+        """A command class that deletes a single record from the SQL table"""
         
         def execute(self, data: int) -> str:
             db.delete_record(table_name="vitals", criteria={"id": data})
