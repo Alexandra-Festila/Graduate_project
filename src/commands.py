@@ -19,7 +19,7 @@ class CreateVitalSignsTableCommand:
             columns={
                 'record_id': 'INTEGER PRIMARY KEY AUTOINCREMENT',
                 'patient_id': 'INTEGER NOT NULL',
-                'date': 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+                'date': 'TEXT NOT NULL',
                 'heart_rate': 'INTEGER',
                 'blood_pressure': 'TEXT',
                 'respiratory_rate': 'INTEGER',
@@ -63,7 +63,7 @@ class GetPatientRecordsCommand:
     """A command class that will return all the records of a specific patient."""
 
     def execute (self, data: int) -> t.Optional[tuple]:
-        result = db.select_record(table_name="vitals", criteria={"patient_id": data}).fetchone()
+        result = db.select_record(table_name="vitals", criteria={"patient_id": data}).fetchall()
         return result
 
 

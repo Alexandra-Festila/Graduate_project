@@ -28,7 +28,7 @@ def loop():
         ),
         "R": p.Option(
             name="Delete all records of a patient",
-            command=c.DeletePatientRecordsCommand,
+            command=c.DeletePatientRecordsCommand(),
             prep_call=p.get_patient_id
         ),
         "Q": p.Option(

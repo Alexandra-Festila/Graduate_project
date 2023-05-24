@@ -14,7 +14,7 @@ class DatabaseManager:
     def __init__(self, db_name: str):
         """Initializes the connection with the the SQLite database."""
 
-        self.conn = sqlite3.connect(db_name)
+        self.conn = sqlite3.connect(db_name, check_same_thread=False, isolation_level=None)
 
     def __del__(self):
         """Closes the connection when the database is no longer in use."""
