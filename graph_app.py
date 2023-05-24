@@ -65,8 +65,7 @@ if option == "Add a record":
 
         st.success(result)
 
-
-if option == "List all records":
+elif option == "List all records":
     st.write("#### All records")
 
     styled_df = df.style
@@ -122,5 +121,4 @@ elif option == "Delete record":
     if st.button("Delete Record"):
         result = c.DeleteRecordCommand().execute(int(id_))
         st.write(result)
-
-
+        
